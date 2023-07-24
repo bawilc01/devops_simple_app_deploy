@@ -25,6 +25,7 @@ func handleRequests() {
     // replace http.HandleFunc with myRouter.HandleFunc
     myRouter.HandleFunc("/", homePage)
     myRouter.HandleFunc("/all", returnAllArticles)
+	myRouter.HandleFunc("/article/{id}", returnsSingleArticle)
     // finally, instead of passing in nil, we want
     // to pass in our newly created router as the second
     // argument
@@ -32,6 +33,7 @@ func handleRequests() {
 }
 
 type Article struct {
+	Id string `json: "id"`
     Title string `json:"title"`
     Desc string `json:"desc"`
     Content string `json:"content"`
@@ -45,8 +47,8 @@ var Articles []Article
 func main() {
 	fmt.Println("Rest API v2.0 - Mux Routers")
 	Articles = []Article{
-        Article{Title: "Hello", Desc: "Article Description", Content: "Article Content"},
-        Article{Title: "Hello 2", Desc: "Article Description", Content: "Article Content"},
+        Article{Id: "1", Title: "Hello", Desc: "Article Description", Content: "Article Content"},
+        Article{Id: "2", Title: "Hello 2", Desc: "Article Description", Content: "Article Content"},
     }
 	handleRequests()
 }
