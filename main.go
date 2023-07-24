@@ -62,5 +62,11 @@ func returnSingleArticle(w http.ResponseWriter, r *http.Request){
     vars := mux.Vars(r)
     key := vars["id"]
 
-    fmt.Fprintf(w, "Key: " + key)
+	for _, article := range Articles {
+        if article.Id == key {
+            json.NewEncoder(w).Encode(article)
+        }
+    }
+
+    //fmt.Fprintf(w, "Key: " + key)
 }
