@@ -14,11 +14,21 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleRequests() {
-	http.HandleFunc("/", homePage)
+	//http.HandleFunc("/", homePage)
 	// add our articles route and map it to our 
     // returnAllArticles function like so
-    http.HandleFunc("/articles", returnAllArticles)
-	log.Fatal(http.ListenAndServe(":10000", nil))
+    //http.HandleFunc("/articles", returnAllArticles)
+
+	// creates a new instance of a mux router
+    myRouter := mux.NewRouter().StrictSlash(true)
+    // replace http.HandleFunc with myRouter.HandleFunc
+    myRouter.HandleFunc("/", homePage)
+    myRouter.HandleFunc("/all", returnAllArticles)
+    // finally, instead of passing in nil, we want
+    // to pass in our newly created router as the second
+    // argument
+    log.Fatal(http.ListenAndServe(":10000", myRouter))
+	//log.Fatal(http.ListenAndServe(":10000", nil))
 }
 
 type Article struct {
