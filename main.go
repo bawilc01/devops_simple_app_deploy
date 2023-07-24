@@ -25,7 +25,7 @@ func handleRequests() {
     // replace http.HandleFunc with myRouter.HandleFunc
     myRouter.HandleFunc("/", homePage)
     myRouter.HandleFunc("/all", returnAllArticles)
-	myRouter.HandleFunc("/article/{id}", returnsSingleArticle)
+	myRouter.HandleFunc("/article/{id}", returnSingleArticle)
     // finally, instead of passing in nil, we want
     // to pass in our newly created router as the second
     // argument
