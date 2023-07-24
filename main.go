@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"io/ioutil"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +25,7 @@ func handleRequests() {
     myRouter := mux.NewRouter().StrictSlash(true)
     // replace http.HandleFunc with myRouter.HandleFunc
     myRouter.HandleFunc("/", homePage)
-    myRouter.HandleFunc("/all", returnAllArticles)
+    myRouter.HandleFunc("/articles", returnAllArticles)
 	// NOTE: Ordering is important here! This has to be defined before
     // the other `/article` endpoint. 
     myRouter.HandleFunc("/article", createNewArticle).Methods("POST") 
@@ -76,7 +77,17 @@ func returnSingleArticle(w http.ResponseWriter, r *http.Request){
 
 func createNewArticle(w http.ResponseWriter, r *http.Request) {
 	// get the body of our POST request
-	// return the string response containing the request body    
+	// unmarshal this into a new Article struct
+    // append this to our Articles array.  
+
 	reqBody, _ := ioutil.ReadAll(r.Body)
-	fmt.Fprintf(w, "%+v", string(reqBody))
+	var article Article 
+    json.Unmarshal(reqBody, &article)
+    // update our global Articles array to include
+    // our new Article
+    Articles = append(Articles, article)
+	json.NewEncoder(w).Encode(article)
+
+	// return the string response containing the request body when not unmarshalling    
+	// fmt.Fprintf(w, "%+v", string(reqBody))
 }
