@@ -18,6 +18,7 @@ func handleRequests() {
 	// add our articles route and map it to our 
     // returnAllArticles function like so
     //http.HandleFunc("/articles", returnAllArticles)
+	//log.Fatal(http.ListenAndServe(":10000", nil))
 
 	// creates a new instance of a mux router
     myRouter := mux.NewRouter().StrictSlash(true)
@@ -28,7 +29,6 @@ func handleRequests() {
     // to pass in our newly created router as the second
     // argument
     log.Fatal(http.ListenAndServe(":10000", myRouter))
-	//log.Fatal(http.ListenAndServe(":10000", nil))
 }
 
 type Article struct {
@@ -43,6 +43,7 @@ type Article struct {
 var Articles []Article
 
 func main() {
+	fmt.Println("Rest API v2.0 - Mux Routers")
 	Articles = []Article{
         Article{Title: "Hello", Desc: "Article Description", Content: "Article Content"},
         Article{Title: "Hello 2", Desc: "Article Description", Content: "Article Content"},
