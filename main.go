@@ -57,3 +57,10 @@ func returnAllArticles(w http.ResponseWriter, r *http.Request){
     fmt.Println("Endpoint Hit: returnAllArticles")
     json.NewEncoder(w).Encode(Articles)
 }
+
+func returnSingleArticle(w http.ResponseWriter, r *http.Request){
+    vars := mux.Vars(r)
+    key := vars["id"]
+
+    fmt.Fprintf(w, "Key: " + key)
+}
