@@ -25,6 +25,9 @@ func handleRequests() {
     // replace http.HandleFunc with myRouter.HandleFunc
     myRouter.HandleFunc("/", homePage)
     myRouter.HandleFunc("/all", returnAllArticles)
+	// NOTE: Ordering is important here! This has to be defined before
+    // the other `/article` endpoint. 
+    myRouter.HandleFunc("/article", createNewArticle).Methods("POST")git 
 	myRouter.HandleFunc("/article/{id}", returnSingleArticle)
     // finally, instead of passing in nil, we want
     // to pass in our newly created router as the second
@@ -69,4 +72,11 @@ func returnSingleArticle(w http.ResponseWriter, r *http.Request){
     }
 
     //fmt.Fprintf(w, "Key: " + key)
+
+func createNewArticle(w http.ResponseWriter, r *http.Request) {
+	// get the body of our POST request
+	// return the string response containing the request body    
+	reqBody, _ := ioutil.ReadAll(r.Body)
+	fmt.Fprintf(w, "%+v", string(reqBody))
+	}
 }
