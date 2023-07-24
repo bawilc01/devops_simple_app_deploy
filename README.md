@@ -1,5 +1,6 @@
 # devops_simple_app_deploy
 deploy an app using terraform to a kubernetes cluster
+this readme is functioning as a to do list for now
 
 # step 1: write golang api app 
 I am trying to get acquainted with Golang. The app is a simple, RESTful api that reads an articles array and performs CRUD operations. No backend db at this time.
