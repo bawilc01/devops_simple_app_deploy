@@ -29,6 +29,8 @@ func handleRequests() {
 	// NOTE: Ordering is important here! This has to be defined before
     // the other `/article` endpoint. 
     myRouter.HandleFunc("/article", createNewArticle).Methods("POST") 
+	// add our new DELETE endpoint here
+    myRouter.HandleFunc("/article/{id}", deleteArticle).Methods("DELETE")
 	myRouter.HandleFunc("/article/{id}", returnSingleArticle)
     // finally, instead of passing in nil, we want
     // to pass in our newly created router as the second
@@ -90,4 +92,24 @@ func createNewArticle(w http.ResponseWriter, r *http.Request) {
 
 	// return the string response containing the request body when not unmarshalling    
 	// fmt.Fprintf(w, "%+v", string(reqBody))
+}
+
+func deleteArticle(w http.ResponseWriter, r *http.Request) {
+    // once again, we will need to parse the path parameters
+    vars := mux.Vars(r)
+    // we will need to extract the `id` of the article we
+    // wish to delete
+    id := vars["id"]
+
+    // we then need to loop through all our articles
+    for index, article := range Articles {
+        // if our id path parameter matches one of our
+        // articles
+        if article.Id == id {
+            // updates our Articles array to remove the 
+            // article
+            Articles = append(Articles[:index], Articles[index+1:]...)
+        }
+    }
+
 }
