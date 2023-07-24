@@ -11,5 +11,5 @@ Learning kubernetes. Not sure what is needed here yet.
 # Step 3: Write terraform script to deploy the app using github actions ci/cd
 Have familiarity with terraform and github actions separately.
 
-# Step 4: add db backend for saving CRUD operations
+# Step 4: Add db backend for saving CRUD operations
 Will use mysql or postgres. May explore nosql option such as mongo.
